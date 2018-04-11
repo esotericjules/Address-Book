@@ -1,0 +1,118 @@
+.form_div {
+  margin: 1% 1%;
+  
+}
+
+
+ label {
+  margin: 1px 0px;
+  display: inline-block;
+  font-weight: 600;
+}
+
+input {
+  height: 27px;
+}
+
+*, ::after, ::before {
+  box-sizing: border-box;
+}
+
+.index_body{
+  background: linear-gradient(0deg,rgba(136,96,208,0.4),rgba(68,49,141,0.4)),url("../img/address_book1.jpg") no-repeat ;
+  background-size: cover;
+  min-height:100%;
+}
+
+.contact_list {
+  box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);
+  margin: 7% 20px;
+  background-color: rgb(255, 255, 255);
+  padding: 2%;
+}
+
+#list_item{
+  cursor: pointer;
+}
+
+.btns {
+  position: relative;
+  border: none;
+  text-align: center;
+  -webkit-transition-duration: 0.4s; 
+  transition-duration: 0.4s;
+  text-decoration: none;
+  overflow: hidden;
+  cursor: pointer;  
+  margin: 10px 5px;
+  padding: 7px 10px;
+  box-shadow: 0 15px 20px rgba(0, 0, 0, 0.1); 
+  
+}
+
+.btns:after {
+  content: "";
+  background: #90EE90;
+  display: block;
+  position: absolute;
+  padding-top: 300%;
+  padding-left: 350%;
+  margin-left: -20px!important;
+  margin-top: -120%;
+  opacity: 0;
+  transition: all 0.8s
+}
+
+.btns:active:after {
+  padding: 0;
+  margin: 0;
+  opacity: 1;
+  transition: 0s
+}
+
+#submitForm {
+  background-color: rgb(0, 204, 51);
+  border: 1px solid rgb(0, 204, 51);
+}
+
+#title{
+  position: relative;
+  left: 38%;
+  top: 1%;
+  margin-bottom: 2%;
+  font-family: tangerine;
+  font-size: 40px;
+}
+
+.editButton {
+  background-color: #0099FF;
+  border: 1px solid #0099FF;
+  display: none;
+}
+
+.deleteButton {
+  background-color: #FF0000;
+  border: 1px solid #FF0000;
+  display: none;
+
+}
+
+.main_body {
+  background: linear-gradient(0deg,rgba(234,231,220),rgba(234,231,220));
+  background-size: cover;
+  min-height: 100%;
+  position: relative;
+  overflow-x: hidden;
+  
+}
+
+.addressInput {
+  font-size: 20px;
+  height: 50px;
+  
+}
+
+.contactName {
+  text-transform: uppercase;
+
+}
