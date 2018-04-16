@@ -18,17 +18,10 @@ input {
   box-sizing: border-box;
 }
 
-.index_body{
-  background: linear-gradient(0deg,rgba(136,96,208,0.4),rgba(68,49,141,0.4)),url("../img/address_book1.jpg") no-repeat ;
-  background-size: cover;
-  min-height:100%;
-}
 
 .contact_list {
-  box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);
-  margin: 7% 20px;
-  background-color: rgb(255, 255, 255);
-  padding: 2%;
+  margin: 1% 5%;
+  padding: 2% 8%;
 }
 
 #list_item{
@@ -98,21 +91,79 @@ input {
 }
 
 .main_body {
-  background: linear-gradient(0deg,rgba(234,231,220),rgba(234,231,220));
+  background: linear-gradient(0deg,rgba(47,47,207),rgba(47,47,207));
   background-size: cover;
   min-height: 100%;
   position: relative;
   overflow-x: hidden;
+  color: rgba(255, 255, 255);
+  font-family: raleway;
   
 }
 
 .addressInput {
-  font-size: 20px;
+  font-size: 17px;
   height: 50px;
+  width: 100px;
+  padding: 10px;
+}
+
+.addressInput:focus {
+  outline: none;
+}
+
+#list {
+  color: #000;
+  list-style: none;
+}
+
+#list_item {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 100%;
+  padding: 20px 16px;
+  margin: 10px 0px;
+  background-color: white;
   
 }
 
-.contactName {
-  text-transform: uppercase;
+#list_item:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
 
+.container {
+}
+
+.contact {
+  border: none;
+  text-transform: uppercase;
+  font-weight: 700;
+  cursor: pointer;
+  
+}
+
+.contact:focus {
+  outline: none;
+}
+
+.h2_contact {
+  text-align: center;
+  margin-bottom: 3%;
+}
+
+.addressInput:focus, #user:focus, #phoneNo:focus, #email:focus, #address:focus {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  outline: none;
+  
+}
+i {
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+}
+
+.down {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
 }

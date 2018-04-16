@@ -7,7 +7,11 @@ var form = document.getElementById('contactForm');
 var list_Ul = document.getElementById("list");
 var contacts = document.getElementsByClassName('contactName');
 
-function AddressBookEntry(name, phoneNo, email, address) {
+var saveEdit = document.getElementsByClassName('editButton');
+var editing = document.getElementById('edited');
+var displayList = document.getElementsByClassName("addressInput");
+
+function AddressBookStorage(name, phoneNo, email, address) {
     this.name = name;
     this.phoneNo = phoneNo;
     this.email = email;
@@ -18,13 +22,14 @@ function AddressBookEntry(name, phoneNo, email, address) {
 function go() {
 
     //Get saved Items from Local Storage on Page Load
-    var savedItems = JSON.parse(localStorage.getItem("addressBook"));
+    let savedItems = JSON.parse(localStorage.getItem("addressBook"));
     if (savedItems !== null) {
         for (var i = 0; i < savedItems.length; i++) {
-            var text = savedItems[i].name;
-            var li = document.createElement("li");
+            let text = savedItems[i].name;
+            let li = document.createElement("li");
             li.setAttribute("id", "list_item");
-            li.innerHTML = '<div class="contactName" data-attr-item=" ' + i + '"><h4 class="contact"> ' + text + '</h4>' + '<input class="addressInput" style="width: 100%;  display: none;"  type ="text" value=" ' + savedItems[i].phoneNo + ' || ' + savedItems[i].email + ' ||  ' + savedItems[i].address + ' " >' + '<button class="btns editButton" data-attr-index="' + i + '" id="edited">SAVE</button>' + '<button class="btns deleteButton">Delete</button></div>'
+            li.innerHTML = '<div class="contactName" data-attr-item=" ' + i + '"><input class="contact" value="' + text + '">' + '<input class="addressInput" style="width: 100%;  display: none;"  type ="text" value="' + savedItems[i].phoneNo + '  |  ' + savedItems[i].email + '  |  ' + savedItems[i].address + '" >' + '<button class="btns editButton" data-attr-index="' + i + '" id="edited">SAVE</button>' + '<button class="btns deleteButton">Delete</button></div>'            
+            
             list_Ul.appendChild(li);
 
         }
@@ -46,9 +51,9 @@ function go() {
             alert("You cannot save an empty contact");
         } else {
             // create new object using consturctor that will be added onclick of submit button
-            var newAddress = new AddressBookEntry(name, phoneNum, email_, address_);
+            var newAddress = new AddressBookStorage(name, phoneNum, email_, address_);
 
-            var savedAddress = JSON.parse(localStorage.getItem('addressBook'));
+            let savedAddress = JSON.parse(localStorage.getItem('addressBook'));
 
             if (savedAddress !== null) {
 
@@ -60,210 +65,133 @@ function go() {
                 localStorage.setItem("addressBook", JSON.stringify([newAddress]));
 
             }
-            alert('The Contact has been saved');
-            
-            // var text = newAddress.name + ' ' + newAddress.phoneNo + ' ' + newAddress.email + ' ' + newAddress.address; 
+
             var savedItems = JSON.parse(localStorage.getItem("addressBook"));
 
-            var text = newAddress.name
+            let text = newAddress.name
 
-            var li = document.createElement("li");
+            let li = document.createElement("li");
             li.setAttribute("id", "list_item");
-            li.innerHTML = '<div class="contactName" data-attr-item=" ' + i + '"><h4 class="contact"> ' + text + '</h4>' + '<input class="addressInput" style="width: 100%;  display: none;"  type ="text" value=" ' + savedItems[i].phoneNo + ' || ' + savedItems[i].email + ' ||  ' + savedItems[i].address + ' " >' + '<button class="btns editButton" data-attr-index="' + i + '" id="edited">SAVE</button>' + '<button class="btns deleteButton">Delete</button></div>'
-            console.log(li);
+            li.innerHTML = '<div class="contactName" data-attr-item=" ' + i + '"><input class="contact" value="' + text + '">' + '<input class="addressInput" style="width: 100%;  display: none;"  type ="text" value="' + savedItems[i].phoneNo + '  |  ' + savedItems[i].email + '  |  ' + savedItems[i].address + '" >' + '<button class="btns editButton" data-attr-index="' + i + '" id="edited">SAVE</button>' + '<button class="btns deleteButton">Delete</button></div>'            
+            
             list_Ul.appendChild(li);
 
-            var clickContact = document.getElementsByClassName('contact');
-            var displayList = document.getElementsByClassName("addressInput");
-            var displayEditButtons = document.getElementsByClassName("editButton");
-            var displayDeleteButtons = document.getElementsByClassName("deleteButton");
-           
-
-
-            for (let x = 0; x < clickContact.length; x++) {
-                var item = clickContact[x];
-                item.onclick = function (event) {
-                    if (displayList[x].style.display === "none") {
-
-                        displayList[x].style.display = 'block';
-                        displayEditButtons[x].style.display = 'inline-block';
-                        displayDeleteButtons[x].style.display = 'inline-block';
-
-                    } else {
-                        displayList[x].style.display = "none";
-                        displayEditButtons[x].style.display = 'none';
-                        displayDeleteButtons[x].style.display = 'none';
-                    }
-                   
-                }
-
-            }
-
-
+            displayContacts();// Display Contact Details after submit
+            
+            alert('The Contact has been saved');
+            
         }
 
         form.reset();
 
-         //Edit contact details on click of edit button
-    var saveEdit = document.getElementsByClassName('editButton');
-    var editing = document.getElementById('edited');
+        editContact();// Edit Contact Details after submit
+        deleteContact();// Delete Contact Details after submit
 
-    console.log(saveEdit);
-    for (let y = 0; y < saveEdit.length; y++) {
-        var editItem = saveEdit[y];
-
-        editItem.onclick = function (f) {
-            var index = f.currentTarget.getAttribute('data-attr-index');
-            var updatedAddress = displayList[y].value;
-            var info = updatedAddress.split("||");
-        
-            name = '';
-            phoneNum = info[0];
-            email_ = info[1];
-            address_ = info[2];
-
-            var savedAddress = JSON.parse(localStorage.getItem('addressBook'));
-
-            if (savedAddress !== null) {
-                savedAddress[index].phoneNo = phoneNum;
-                savedAddress[index].email = email_;
-                savedAddress[index].address = address_;
-
-                localStorage.setItem("addressBook", JSON.stringify(savedAddress));
-
-            }
-            alert('The Edited Contact has been saved');
-        }
-
-    }
-
-    //Delete Contact on click
-    var deleting = document.getElementsByClassName('deleteButton');
-
-    console.log(deleting);
-    for (let d = 0; d < deleting.length; d++) {
-        var deleteItem = contacts[d];
-      
-
-        var deleteClick = deleting[d];
-
-        deleteClick.onclick = function (f) {
-            var index = this.parentNode.getAttribute('data-attr-item');
-            var item = this.parentNode.parentNode;
-            var updatedAddress = displayList[d].value;
-
-            var info = updatedAddress.split("||");
-
-            item.remove();
-
-            name = '';
-            phoneNum = info[0];
-            email_ = info[1];
-            address_ = info[2];
-
-            var savedAddress = JSON.parse(localStorage.getItem('addressBook'));
-            savedAddress.splice(index, 1);
-        
-            localStorage.setItem("addressBook", JSON.stringify(savedAddress));
-            alert('Contact Successfully Deleted');
-            
-        }
-    }
-
-    }
+    } //End of On Submit click
 
     //Display contact details on click of contact name 
-    var clickContact = document.getElementsByClassName('contact');
-    var displayList = document.getElementsByClassName("addressInput");
-    var displayEditButtons = document.getElementsByClassName("editButton");
-    var displayDeleteButtons = document.getElementsByClassName("deleteButton");
+    function displayContacts() {
+        let clickContact = document.getElementsByClassName('contact');
+        let displayList = document.getElementsByClassName("addressInput");
+        let displayEditButtons = document.getElementsByClassName("editButton");
+        let displayDeleteButtons = document.getElementsByClassName("deleteButton");
+        let contact_div = document.getElementsByClassName("contactName");
 
-    console.log(clickContact);
-    console.log(displayList);
+        for (let x = 0; x < clickContact.length; x++) {
+            let item = clickContact[x];
+            item.onclick = function (event) {
+                if (displayList[x].style.display === 'none') {
+                    displayList[x].style.display = 'block';
+                    displayEditButtons[x].style.display = 'inline-block';
+                    displayDeleteButtons[x].style.display = 'inline-block';
+                    contact_div[x].style.padding = "16px 5px";
 
+                } else {
+                    displayList[x].style.display = 'none';
+                    displayEditButtons[x].style.display = 'none';
+                    displayDeleteButtons[x].style.display = 'none';
+                    contact_div[x].style.padding = "0";
 
-    for (let x = 0; x < clickContact.length; x++) {
-        var item = clickContact[x];
-        item.onclick = function (event) {
-            if(displayList[x].style.display === 'none') {
-            displayList[x].style.display = 'block';
-            displayEditButtons[x].style.display = 'inline-block';
-            displayDeleteButtons[x].style.display = 'inline-block';
-            } else {
-                displayList[x].style.display = 'none';
-                displayEditButtons[x].style.display = 'none';
-                displayDeleteButtons[x].style.display = 'none';
+                }
             }
-        }
 
+        }
     }
 
+    displayContacts();
     //Edit contact details on click of edit button
-    var saveEdit = document.getElementsByClassName('editButton');
-    var editing = document.getElementById('edited');
+    function editContact() {
 
-    console.log(saveEdit);
-    for (let y = 0; y < saveEdit.length; y++) {
-        var editItem = saveEdit[y];
+        for (let y = 0; y < saveEdit.length; y++) {
+            let editItem = saveEdit[y];
 
-        editItem.onclick = function (f) {
-            var index = f.currentTarget.getAttribute('data-attr-index');
-            var updatedAddress = displayList[y].value;
-            var info = updatedAddress.split("||");
-        
-            name = '';
-            phoneNum = info[0];
-            email_ = info[1];
-            address_ = info[2];
+            editItem.onclick = function (f) {
+                let index = f.currentTarget.getAttribute('data-attr-index');
+                let updatedAddress = displayList[y].value;
+                let info = updatedAddress.split("|");
+                let contact = document.getElementsByClassName('contact');
+                let contactValue = contact[y].value;
+            
 
-            var savedAddress = JSON.parse(localStorage.getItem('addressBook'));
+                name = contactValue;
+                phoneNum = info[0];
+                email_ = info[1];
+                address_ = info[2];
 
-            if (savedAddress !== null) {
-                savedAddress[index].phoneNo = phoneNum;
-                savedAddress[index].email = email_;
-                savedAddress[index].address = address_;
+                let savedAddress = JSON.parse(localStorage.getItem('addressBook'));
 
-                localStorage.setItem("addressBook", JSON.stringify(savedAddress));
+                if (savedAddress !== null) {
+                    savedAddress[index].name = name;
+                    savedAddress[index].phoneNo = phoneNum;
+                    savedAddress[index].email = email_;
+                    savedAddress[index].address = address_;
 
+                    localStorage.setItem("addressBook", JSON.stringify(savedAddress));
+
+                }
+                alert('The Edited Contact has been saved');
             }
-            alert('The Edited Contact has been saved');
-        }
 
+        }
     }
 
     //Delete Contact on click
-    var deleting = document.getElementsByClassName('deleteButton');
+    function deleteContact() {
+        let deleting = document.getElementsByClassName('deleteButton');
+        for (let d = 0; d < deleting.length; d++) {
+            let deleteItem = contacts[d];
 
-    console.log(deleting);
-    for (let d = 0; d < deleting.length; d++) {
-        var deleteItem = contacts[d];
-      
 
-        var deleteClick = deleting[d];
+            let deleteClick = deleting[d];
 
-        deleteClick.onclick = function (f) {
-            var index = this.parentNode.getAttribute('data-attr-item');
-            var item = this.parentNode.parentNode;
-            var updatedAddress = displayList[d].value;
+            deleteClick.onclick = function (f) {
+                let index = this.parentNode.getAttribute('data-attr-item');
+                let item = this.parentNode.parentNode;
+                let updatedAddress = displayList[d].value;
+                let contact = document.getElementsByClassName('contact');
+                let contactValue = contact[d].value;
 
-            var info = updatedAddress.split("||");
+                let info = updatedAddress.split("|");
 
-            item.remove();
+                item.remove();
 
-            name = '';
-            phoneNum = info[0];
-            email_ = info[1];
-            address_ = info[2];
+                name = contactValue;
+                phoneNum = info[0];
+                email_ = info[1];
+                address_ = info[2];
 
-            var savedAddress = JSON.parse(localStorage.getItem('addressBook'));
-            savedAddress.splice(index, 1);
-        
-            localStorage.setItem("addressBook", JSON.stringify(savedAddress));
-            alert('Contact Successfully Deleted');
-            
-                   }
+                let savedAddress = JSON.parse(localStorage.getItem('addressBook'));
+                savedAddress.splice(index, 1);
+
+                localStorage.setItem("addressBook", JSON.stringify(savedAddress));
+                alert('Contact Successfully Deleted');
+
+            }
+        }
     }
 
+    editContact();// Edit Contact Details on page load
+    deleteContact();// Delete Contact Details on page load
 }
 
 
