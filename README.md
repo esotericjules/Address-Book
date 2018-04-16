@@ -1,5 +1,5 @@
 # Address-Book
-My ALC2.0 final project
+My ALC2.0 Take a climb challenge
 
 For my final project in the ALC 2.0 web beginner track program, I was asked to build an Address Book with HTML, CSS and Vanilla Javascript, without any frameworks or libraries.
 The functionality in the Address Book I built included
